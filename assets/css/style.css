@@ -1,18 +1,23 @@
-#question {
-    font-size: 24px;
-    font-weight: bold;
-    padding-bottom: 20px;
+
+.answer {
+    background-color: lightgreen;
+    border: 1px solid green;
+    margin: 5px;    
 }
 
-#options {
-    font-size: 18px;
-    line-height: 200%;
+.clockSize {
+    font-size: 26px;
 }
 
-.timer {
-    font-size: 18px;
+.emoji {
+    font-family: "Segoe UI Emoji"; 
+    font-size: 26px;
     display: inline;
-    padding: 5px;
+}
+
+.emojiText {
+    font-size: 26px;
+    display: inline;
 }
 
 .guess {
@@ -21,7 +26,40 @@
 }
 
 .guess:hover {
+    background-color: lightgoldenrodyellow;
+    border: 1px solid gold;
+    margin: 5px;
+}
+
+#options {
+    font-size: 18px;
+    line-height: 200%;
+}
+
+#question {
+    font-size: 24px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.resetPad {
+    padding-bottom: 10px;
+}
+
+.selected {
+    background-color: lightgoldenrodyellow;
+    border: 1px solid gold;
+    margin: 5px;    
+}
+
+.timer {
+    font-size: 26px;
+    display: inline;
+    padding-left: 10px;
+}
+
+.wrong {
     background-color: lightsalmon;
     border: 1px solid red;
-    margin: 5px;
+    margin: 5px;    
 }

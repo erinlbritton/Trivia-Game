@@ -53,6 +53,7 @@ $(document).ready(function() {
         }
     }
 
+// Initialize global variables and set question content
     var roundCorrect = 0;
     var roundIncorrect = 0;
     var globalWins = 0;
@@ -62,6 +63,7 @@ $(document).ready(function() {
     var displayQuestion = trivia[questionKeys[questionIndex]];
     var timer = 5;
     var intervalId;
+    var hasGuessed = false;
 
     $("#question").text(displayQuestion.question);
     $("#timer").html(timer);
@@ -73,35 +75,54 @@ $(document).ready(function() {
         $("#options").append(options);
     });
     
+// Click event on guess    
     $("#options").on("click", ".guess", function() {
-    // Grab value from HTML
-        var clickValue = ($(this).attr("value"));
-        stop();
-    // Check if the value matches the answer
-        if (clickValue === displayQuestion.answer) {
-            roundCorrect++;
-            console.log("You win!");
-        } else {
-            roundIncorrect++;
-            console.log("You lose!");
-        };
-    // Reset question and options for next round after 2 second delay
-        if (questionIndex < questionKeys.length-1) {
-            setTimeout (nextRound, 1000 * 2);
-        } else {
-            console.log("Game Over!");
-            console.log("Correct: " + roundCorrect);
-            console.log("Incorrect: " + roundIncorrect);
-            var resetBtn = $("<button>");
-            resetBtn.attr("class", "btn btn-default btn-lg");
-            resetBtn.text("Play Again");
-            $(".reset").html(resetBtn);
-        }
+
+    if (!hasGuessed && timer > 0) {
+        // Only allow one guess per question
+            hasGuessed = true;
+        // Grab value from HTML
+            var clickValue = ($(this).attr("value"));
+        // Stop timer
+            stop();
+        // Add class to keep selected choice highlighted
+            $(this).attr("class", "selected");
+        // Wait two seconds and then reveal if the selection was correct
+            setTimeout (function winLose() {
+        // Check if the value matches the answer
+            if (clickValue === displayQuestion.answer) {
+                roundCorrect++;
+                $(".selected").attr("class", "answer");
+                $(".reset").html('<div class="emoji">🎉</div><div class="emojiText"> Correct!</div>');
+            } else {
+                roundIncorrect++;
+                $(".selected").attr("class", "wrong");
+                $(".guess[value='" + displayQuestion.answer + "']").attr("class", "answer");
+                $(".reset").html('<div class="emoji">😭</div><div class="emojiText"> Try Again!</div>');
+            };
+        }, 1000 * 2);
+        // Reset question and options for next round after 2 second delay
+            if (questionIndex < questionKeys.length-1) {
+                setTimeout (nextRound, 1000 * 4);
+            } else {
+                setTimeout (function addResetBtn() {
+                    console.log("Game Over!");
+                    console.log("Correct: " + roundCorrect);
+                    console.log("Incorrect: " + roundIncorrect);
+                    var resetBtn = $("<button>");
+                    resetBtn.attr("class", "btn btn-default btn-lg");
+                    resetBtn.text("Play Again");
+                    $(".reset").html(resetBtn);
+                } , 1000 * 4);
+            }
+    }
     });
 
+// Increment question index, reset timer, question, and options    
     function nextRound() {
         questionIndex++;
         timer = 5;
+        $(".reset").html('<span class="glyphicon glyphicon-time timer" aria-hidden="true"></span><div class="timer" id="timer"></div>');
         $("#timer").html(timer);
         run();
         console.log(questionIndex);
@@ -116,6 +137,8 @@ $(document).ready(function() {
         options.html(displayQuestion.options[i] + "<br>");
         $("#options").append(options);
         });
+
+        hasGuessed = false;
     }
 
 // Timer functions
@@ -136,25 +159,32 @@ $(document).ready(function() {
             console.log("Time's up!");
             // Reset question and options for next round after 2 second delay
             if (questionIndex < questionKeys.length-1) {
+                $(".guess[value='" + displayQuestion.answer + "']").attr("class", "answer");
+                $(".reset").html('<div class="emoji">⏰</div><div class="emojiText"> Time\'s Up!</div>');
                 setTimeout (nextRound, 1000 * 2);
             } else {
-                console.log("Game Over!");
-                console.log("Correct: " + roundCorrect);
-                console.log("Incorrect: " + roundIncorrect);
-                var resetBtn = $("<button>");
-                resetBtn.attr("class", "btn btn-default btn-lg");
-                resetBtn.text("Play Again");
-                $(".reset").html(resetBtn);
+                $(".guess[value='" + displayQuestion.answer + "']").attr("class", "answer");
+                $(".reset").html('<div class="emoji">⏰</div><div class="emojiText"> Time\'s Up!</div>');
+                setTimeout (function addResetBtn() {
+                    console.log("Correct: " + roundCorrect);
+                    console.log("Incorrect: " + roundIncorrect);
+                    var resetBtn = $("<button>");
+                    resetBtn.attr("class", "btn btn-default btn-lg");
+                    resetBtn.text("Play Again");
+                    $(".reset").html(resetBtn);
+                } , 1000 * 4);
             }
         }
     }
 
     run();
 
+// Click event to reset question index, counters, timer, and question content for new round
     $(".reset").on("click", function() {
         roundCorrect = 0;
         roundIncorrect = 0;
         questionIndex = 0;
+        hasGuessed = false;
         displayQuestion = trivia[questionKeys[questionIndex]];
         $(".reset").html('<span class="glyphicon glyphicon-time timer" aria-hidden="true"></span><div class="timer" id="timer"></div>');
         $("#question").text(displayQuestion.question);
