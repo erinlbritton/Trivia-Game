@@ -1,0 +1,27 @@
+#question {
+    font-size: 24px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+#options {
+    font-size: 18px;
+    line-height: 200%;
+}
+
+.timer {
+    font-size: 18px;
+    display: inline;
+    padding: 5px;
+}
+
+.guess {
+    margin: 5px;
+    border: 1px solid transparent;
+}
+
+.guess:hover {
+    background-color: lightsalmon;
+    border: 1px solid red;
+    margin: 5px;
+}
