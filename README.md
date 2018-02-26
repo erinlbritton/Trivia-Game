@@ -14,4 +14,4 @@ Using JavaScript for the logic and jQuery to manipulate HTML, create a trivia ga
 - [x] Wait a few seconds, then show the next question.
 
 * On the final screen: 
-- [ ] Show the number of correct answers, incorrect answers, and an option to restart the game (without reloading the page).
+- [x] Show the number of correct answers, incorrect answers, and an option to restart the game (without reloading the page).

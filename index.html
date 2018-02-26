@@ -12,22 +12,34 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <div class="jumbotron">
-            <center>
-                <div class="reset resetPad">
-                    <i class="far fa-clock clockSize"></i>
-                    <div class="timer" id="timer"></div>
-                </div>
-                <div id="question"></div>                
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        <div id="options"></div>
+<div class="container">
+    <div class="row margin-top">
+        <center>
+            <div class="col-md-7 col-md-offset-2 content-background">
+                    <div class="reset resetPad">
+                        <div class="emoji clockSize">🕐</div>
+                        <div class="timer" id="timer"></div>
                     </div>
-                </div>
-            </center>
-        </div>
+                    <div id="question"></div>                   
+                    <div id="options"></div>
+            </div>
+        </center>
+            <div class="col-md-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading panel-header-text">Scoreboard</div>
+                        <div class="panel-body panel-text">
+                            <div class="globalGames panel-header-text"></div>
+                            <div class="globalCorrect"></div>
+                            <div class="globalIncorrect"></div>
+                            <hr>
+                            <div class="panel-header-text">This Round</div>
+                            <div class="roundCorrect"></div>
+                            <div class="roundIncorrect"></div>
+                        </div>
+                    </div>
+            </div>  
     </div>
+</div>
 
 
 

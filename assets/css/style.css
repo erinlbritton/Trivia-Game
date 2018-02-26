@@ -9,6 +9,16 @@
     font-size: 26px;
 }
 
+.content-background {
+    background-color: #f5f5f5;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 100px;
+    padding-right: 100px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
 .emoji {
     font-family: "Segoe UI Emoji"; 
     font-size: 26px;
@@ -31,8 +41,20 @@
     margin: 5px;
 }
 
+.margin-top {
+    margin-top: 100px;
+}
+
 #options {
     font-size: 18px;
+    line-height: 200%;
+}
+
+.panel-header-text {
+    font-weight: bold;
+}
+
+.panel-text {
     line-height: 200%;
 }
 

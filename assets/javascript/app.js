@@ -56,8 +56,11 @@ $(document).ready(function() {
 // Initialize global variables and set question content
     var roundCorrect = 0;
     var roundIncorrect = 0;
-    var globalWins = 0;
-    var globalLosses = 0;
+    var globalCorrect = 0;
+    var globalIncorrect = 0;
+    var globalGames = 1;
+    var globalCorrectPercent = 0;
+    var globalIncorrectPercent = 0;
     var questionKeys = Object.keys(trivia);
     var questionIndex = 0;
     var displayQuestion = trivia[questionKeys[questionIndex]];
@@ -67,6 +70,11 @@ $(document).ready(function() {
 
     $("#question").text(displayQuestion.question);
     $("#timer").html(timer);
+    $(".globalGames").html('Total Games (' + globalGames + ')');
+    $(".globalCorrect").html('Correct: ' + globalCorrect);
+    $(".globalIncorrect").html('Incorrect: ' + globalIncorrect);
+    $(".roundCorrect").html('Correct: ' + roundCorrect);
+    $(".roundIncorrect").html('Incorrect: ' + roundIncorrect);
 
     $.each(displayQuestion.options, function(i) {
         var options = $("<div>");
@@ -92,13 +100,19 @@ $(document).ready(function() {
         // Check if the value matches the answer
             if (clickValue === displayQuestion.answer) {
                 roundCorrect++;
+                $(".roundCorrect").html('Correct: ' + roundCorrect);
+                globalCorrect++;
+                calculateRates();
                 $(".selected").attr("class", "answer");
-                $(".reset").html('<div class="emoji">🎉</div><div class="emojiText"> Correct!</div>');
+                $(".reset").html('<div class="emoji">✅</div><div class="emojiText"> Correct!</div>');
             } else {
                 roundIncorrect++;
+                $(".roundIncorrect").html('Incorrect: ' + roundIncorrect);
+                globalIncorrect++;
+                calculateRates();
                 $(".selected").attr("class", "wrong");
                 $(".guess[value='" + displayQuestion.answer + "']").attr("class", "answer");
-                $(".reset").html('<div class="emoji">😭</div><div class="emojiText"> Try Again!</div>');
+                $(".reset").html('<div class="emoji">⛔️</div><div class="emojiText"> Try Again!</div>');
             };
         }, 1000 * 2);
         // Reset question and options for next round after 2 second delay
@@ -106,9 +120,6 @@ $(document).ready(function() {
                 setTimeout (nextRound, 1000 * 4);
             } else {
                 setTimeout (function addResetBtn() {
-                    console.log("Game Over!");
-                    console.log("Correct: " + roundCorrect);
-                    console.log("Incorrect: " + roundIncorrect);
                     var resetBtn = $("<button>");
                     resetBtn.attr("class", "btn btn-default btn-lg");
                     resetBtn.text("Play Again");
@@ -122,7 +133,7 @@ $(document).ready(function() {
     function nextRound() {
         questionIndex++;
         timer = 5;
-        $(".reset").html('<span class="glyphicon glyphicon-time timer" aria-hidden="true"></span><div class="timer" id="timer"></div>');
+        $(".reset").html('<div class="emoji clockSize">🕐</div><div class="timer" id="timer"></div>');
         $("#timer").html(timer);
         run();
         console.log(questionIndex);
@@ -156,6 +167,9 @@ $(document).ready(function() {
         if (timer === 0) {
             stop();
             roundIncorrect++;
+            $(".roundIncorrect").html('Incorrect: ' + roundIncorrect);
+            globalIncorrect++;
+            calculateRates();
             console.log("Time's up!");
             // Reset question and options for next round after 2 second delay
             if (questionIndex < questionKeys.length-1) {
@@ -166,8 +180,6 @@ $(document).ready(function() {
                 $(".guess[value='" + displayQuestion.answer + "']").attr("class", "answer");
                 $(".reset").html('<div class="emoji">⏰</div><div class="emojiText"> Time\'s Up!</div>');
                 setTimeout (function addResetBtn() {
-                    console.log("Correct: " + roundCorrect);
-                    console.log("Incorrect: " + roundIncorrect);
                     var resetBtn = $("<button>");
                     resetBtn.attr("class", "btn btn-default btn-lg");
                     resetBtn.text("Play Again");
@@ -182,11 +194,15 @@ $(document).ready(function() {
 // Click event to reset question index, counters, timer, and question content for new round
     $(".reset").on("click", function() {
         roundCorrect = 0;
+        $(".roundCorrect").html('Correct: ' + roundCorrect);
         roundIncorrect = 0;
+        $(".roundIncorrect").html('Incorrect: ' + roundIncorrect);
         questionIndex = 0;
         hasGuessed = false;
+        globalGames++;
+        $(".globalGames").html('Total Games (' + globalGames + ')');
         displayQuestion = trivia[questionKeys[questionIndex]];
-        $(".reset").html('<span class="glyphicon glyphicon-time timer" aria-hidden="true"></span><div class="timer" id="timer"></div>');
+        $(".reset").html('<div class="emoji clockSize">🕐</div><div class="timer" id="timer"></div>');
         $("#question").text(displayQuestion.question);
         $("#options").text("");
 
@@ -201,5 +217,12 @@ $(document).ready(function() {
         $("#timer").html(timer);
         run();
     });
+
+    function calculateRates() {
+        globalCorrectPercent = parseFloat((globalCorrect*100.0/(globalCorrect + globalIncorrect)).toFixed(1));
+        globalIncorrectPercent = parseFloat((globalIncorrect*100.0/(globalCorrect + globalIncorrect)).toFixed(1));
+        $(".globalCorrect").html('Correct: ' + globalCorrect + ' (' + globalCorrectPercent + '%)');
+        $(".globalIncorrect").html('Incorrect: ' + globalIncorrect + ' (' + globalIncorrectPercent + '%)');
+    }
 
 });
