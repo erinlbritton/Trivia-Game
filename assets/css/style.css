@@ -94,7 +94,7 @@
 
 body {
     background-color: rgb(0, 0, 73);
-    overflow: hidden;
+    overflow: auto;
 }
 
 .img-style {
