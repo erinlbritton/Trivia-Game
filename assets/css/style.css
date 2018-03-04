@@ -5,6 +5,24 @@
     margin: 5px;    
 }
 
+.btn-fill {
+    background-color: #dd4721;
+    color: white;
+    border: 1px solid #db2b00;
+}
+
+.btn-fill:hover {
+    background-color: #db2b00;
+    color: white;
+    border: 1px solid #b82602;
+}
+
+.btn-fill:active {
+    background-color: #db2b00;
+    color: white;
+    border: 1px solid #b82602;
+}
+
 .clockSize {
     font-size: 26px;
 }
@@ -42,8 +60,8 @@
     background-color: #f5f5f5;
     padding-top: 15px;
     padding-bottom: 15px;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
     border: 1px solid #ddd;
     border-radius: 3px;
 }
@@ -57,6 +75,12 @@
 .emojiText {
     font-size: 26px;
     display: inline;
+}
+
+.font8Bit {
+    font-family: 'Press Start 2P', cursive;
+    color: #dd4721;
+    font-weight: bold;
 }
 
 .guess {
@@ -98,6 +122,10 @@ body {
     padding-top: 5px;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.instructions {
+    line-height: 150%;
 }
 
 .margin-top {
@@ -143,6 +171,7 @@ body {
 
 .resetPad {
     padding-bottom: 10px;
+    padding-top: 20px;
 }
 
 .row {
