@@ -423,7 +423,7 @@ $(document).ready(function() {
                     answer: "b"
                 },
                 question3: {
-                    question: "Star Tropics produced a seqel named",
+                    question: "Star Tropics produced a sequel named",
                     options: {
                         a: "Return of Ganon",
                         b: "Zoda's Revenge",
@@ -573,7 +573,7 @@ $(document).ready(function() {
         }
     }
     
-// Initialize global variables and default question content
+// Initialize global variables for keeping track of win/loss
     var roundCorrect = 0;
     var roundIncorrect = 0;
     var globalCorrect = 0;
@@ -581,20 +581,24 @@ $(document).ready(function() {
     var globalGames = 0;
     var globalCorrectPercent = 0;
     var globalIncorrectPercent = 0;
+// Initialize game/round content
     var questionKeys = Object.keys(trivia.bubblebobble.questions);
     var questionIndex = 0;
     var displayQuestion = trivia.bubblebobble.questions[questionKeys[questionIndex]];
     var answer = trivia.bubblebobble.questions.question1.answer;
     var audio = new Audio(trivia.bubblebobble.audio);
+    var defaultAudio = new Audio("assets/audio/nesclassic.mp3");
     var gameSelection = "bubblebobble";
+// Timer per question
     var timer = 5;
     var intervalId;
-    var hasGuessed = false;
+    var hasGuessed = false; // Only one choice per question
+// Add games to carosel
     var gameImages = ["bubblebobble", "megaman2", "metroid", "castlevania", "mario", "startropics", "zelda", "punchout", "finalfantasy", "kidicarus"];
     $.each(gameImages, function(i) {
         $(".container-inner").append(`<img class="img-style" game-name="${gameImages[i]}" src="assets/images/${gameImages[i]}.png">`);
     })
-    var canChooseGame = true;
+    var canChooseGame = true; // Can't select a different game mid-round
 
     $("#timer").html(timer);
     $(".globalGames").html(`Total Games (${globalGames})`);
@@ -602,6 +606,7 @@ $(document).ready(function() {
     $(".globalIncorrect").html(`Incorrect: ${globalIncorrect}`);
     $(".roundCorrect").html(`Correct: ${roundCorrect}`);
     $(".roundIncorrect").html(`Incorrect: ${roundIncorrect}`);
+    defaultAudio.play();
 
 // Click event to queue selected game's summary to prompt click to start
     $(".container-inner").on("click", ".img-style", function() {
@@ -619,6 +624,7 @@ $(document).ready(function() {
 
 // Click event to reset question index, counters, timer, and question content for new round
     $(".reset").on("click", ".start", function() {
+        defaultAudio.pause();
         canChooseGame = false;
         roundCorrect = 0;
         $(".roundCorrect").html(`Correct: ${roundCorrect}`);
@@ -692,6 +698,7 @@ $(document).ready(function() {
                     $("#options").empty();
                     canChooseGame = true;
                     $(".reset").html(`<h2 class="font8Bit">Choose Another Game</h2>`);
+                    defaultAudio.play();
                 } , 1000 * 4);
             }
     }
@@ -751,11 +758,13 @@ $(document).ready(function() {
                     $("#options").empty();
                     canChooseGame = true;
                     $(".reset").html(`<h2 class="font8Bit">Choose Another Game</h2>`);
+                    defaultAudio.play();
                 } , 1000 * 4);
             }
         }
     }
 
+// Calculate win/loss rates and update in scoreboard
     function calculateRates() {
         globalCorrectPercent = parseFloat((globalCorrect*100.0/(globalCorrect + globalIncorrect)).toFixed(1));
         globalIncorrectPercent = parseFloat((globalIncorrect*100.0/(globalCorrect + globalIncorrect)).toFixed(1));

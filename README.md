@@ -15,3 +15,15 @@ Using JavaScript for the logic and jQuery to manipulate HTML, create a trivia ga
 
 * On the final screen: 
 - [x] Show the number of correct answers, incorrect answers, and an option to restart the game (without reloading the page).
+
+# Game Play
+
+When a user initially loads the page, the NES Classic Edition music auto-plays, and instructions prompt the user to select a game from the carosel. Clicking on a game provides each game's tagline. 
+
+When a user clicks the START button, the music changes to match the selected game. 
+
+Each round consists of five questions, and the user has five seconds to guess. After five seconds, the correct answer is revealed. If the user failed to choose, the correct answer is revealed along with a "Time's Up!" message. 
+
+A user can only select another game at the completion of each round. 
+
+The scoreboard on the right panel keeps track of the user's round stats and global game stats. 
