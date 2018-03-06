@@ -590,7 +590,7 @@ $(document).ready(function() {
     var defaultAudio = new Audio("assets/audio/nesclassic.mp3");
     var gameSelection = "bubblebobble";
 // Timer per question
-    var timer = 5;
+    var timer = 10;
     var intervalId;
     var hasGuessed = false; // Only one choice per question
 // Add games to carosel
@@ -649,7 +649,7 @@ $(document).ready(function() {
         $("#options").append(options);
         });
         
-        timer = 5;
+        timer = 10;
         $("#timer").html(timer);
         run();
         audio.play();
@@ -707,7 +707,7 @@ $(document).ready(function() {
 // Increment question index, reset timer, question, and options    
     function nextRound() {
         questionIndex++;
-        timer = 5;
+        timer = 10;
         $(".reset").html('<div class="emoji clockSize">🕐</div><div class="timer" id="timer"></div>');
         $("#timer").html(timer);
         run();
