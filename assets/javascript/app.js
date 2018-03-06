@@ -660,6 +660,7 @@ $(document).ready(function() {
 
     if (!hasGuessed && timer > 0) {
         event.preventDefault();
+        event.stopPropagation();
         // Only allow one guess per question
             hasGuessed = true;
         // Grab value from HTML
