@@ -22,7 +22,7 @@ When a user initially loads the page, the NES Classic Edition music auto-plays, 
 
 When a user clicks the START button, the music changes to match the selected game. 
 
-Each round consists of five questions, and the user has five seconds to guess. After five seconds, the correct answer is revealed. If the user failed to choose, the correct answer is revealed along with a "Time's Up!" message. 
+Each round consists of five questions, and the user has ten seconds to guess. After ten seconds, the correct answer is revealed. If the user failed to choose, the correct answer is revealed along with a "Time's Up!" message. 
 
 A user can only select another game at the completion of each round. 
 
